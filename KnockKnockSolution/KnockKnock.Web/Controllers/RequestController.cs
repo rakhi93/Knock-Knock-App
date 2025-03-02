@@ -12,7 +12,7 @@ namespace KnockKnock.Web.Controllers
 
         public ActionResult Index(DateTime? filterDate)
         {
-            var requests = _context.Requests.ToList(); // Load all requests by default
+            var requests = _context.Request.ToList(); // Load all requests by default
 
             if (filterDate.HasValue)
             {
@@ -31,7 +31,7 @@ namespace KnockKnock.Web.Controllers
         public ActionResult Create()
         {
             var request = new Request { CreatedAt = DateTime.Now, Status = 0 };
-            _context.Requests.Add(request);
+            _context.Request.Add(request);
             _context.SaveChanges();
 
             TempData["SuccessMessage"] = "Request successfully submitted! Please wait for approval.";

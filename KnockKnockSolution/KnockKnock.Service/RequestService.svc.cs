@@ -14,7 +14,7 @@ namespace KnockKnock.Service
         {
             using (var db = new RequestContext())
             {
-                return db.Requests.ToList(); // Return all requests, not just pending ones
+                return db.Request.ToList(); // Return all requests, not just pending ones
             }
         }
 
@@ -23,7 +23,7 @@ namespace KnockKnock.Service
         {
             using (var db = new RequestContext())
             {
-                var request = db.Requests.Find(requestID);
+                var request = db.Request.Find(requestID);
                 if (request == null) return false;
 
                 request.Status = approve ? 1 : 2; // 1 = Approved, 2 = Rejected

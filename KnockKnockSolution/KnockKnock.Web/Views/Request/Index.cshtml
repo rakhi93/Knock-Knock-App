@@ -1,8 +1,6 @@
 ﻿@model List<KnockKnock.Web.Models.Request>
 
 <!-- Page Header -->
- 
-
 <!-- ✅ Success Message Box (Initially Hidden) -->
 @if (TempData["SuccessMessage"] != null)
 {
@@ -35,7 +33,6 @@
         document.getElementById("hideRefreshButtons").style.display = "block";
         sessionStorage.setItem("showTable", "true");
 
-        // Move success message below My Requests button
         let successMessage = document.getElementById("successMessage");
         let successContainer = document.getElementById("successMessageContainer");
         if (successMessage && successContainer) {
@@ -48,7 +45,7 @@
         sessionStorage.removeItem("showTable");
     }
 
-    // ✅ Hide success message automatically after 3 seconds (optional)
+    // ✅ Hide success message automatically after 3 seconds
     document.addEventListener("DOMContentLoaded", function () {
         if (sessionStorage.getItem("showTable") === "true") {
             showRequests();
@@ -57,10 +54,14 @@
         }
 
         setTimeout(() => {
-            if (document.getElementById("successMessage")) {
-                document.getElementById("successMessage").style.display = "none";
+            let successMessage = document.getElementById("successMessage");
+            if (successMessage) {
+                successMessage.style.display = "none";
             }
-        }, 3000); // Hide after 3 seconds (optional)
+        }, 3000); // Hide after 3 seconds
+
+        // ✅ Auto-refresh every 10 seconds
+        setInterval(refreshPage, 10000); // Refresh every 10,000 milliseconds (10 seconds)
     });
 </script>
 

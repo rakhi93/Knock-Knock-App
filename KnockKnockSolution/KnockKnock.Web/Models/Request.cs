@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema; // Import this namespace
 
-namespace KnockKnock.Web.Models  // Ensure correct namespace
+namespace KnockKnock.Web.Models
 {
-    public class Request
+    [Table("Request")] // Map this entity to the "Request" table
+     public class Request
     {
         [Key]
-        //using OOP Concept-Encapsulation
         public int RequestID { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public int Status { get; set; } = 0; // 0 = Pending, 1 = Approved, 2 = Rejected
