@@ -1,7 +1,7 @@
 ﻿@model List<KnockKnock.Web.Models.Request>
 
 <!-- Page Header -->
-<!-- ✅ Success Message Box (Initially Hidden) -->
+<!--  Success Message Box (Initially Hidden) -->
 @if (TempData["SuccessMessage"] != null)
 {
     <div id="successMessage" class="alert alert-success text-center mx-auto w-50 mt-3">
@@ -45,7 +45,7 @@
         sessionStorage.removeItem("showTable");
     }
 
-    // ✅ Hide success message automatically after 3 seconds
+    //  Hide success message automatically after 3 seconds
     document.addEventListener("DOMContentLoaded", function () {
         if (sessionStorage.getItem("showTable") === "true") {
             showRequests();
@@ -60,7 +60,7 @@
             }
         }, 3000); // Hide after 3 seconds
 
-        // ✅ Auto-refresh every 10 seconds
+        //  Auto-refresh every 10 seconds
         setInterval(refreshPage, 10000); // Refresh every 10,000 milliseconds (10 seconds)
     });
 </script>
