@@ -1,0 +1,12 @@
+﻿<Application x:Class="KnockKnock.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:KnockKnock.WPF"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Register the  converter -->
+        <local:StatusConverter x:Key="StatusConverter"/>
+        <local:ButtonStyleConverter x:Key="ButtonStyleConverter"/>
+
+    </Application.Resources>
+</Application>

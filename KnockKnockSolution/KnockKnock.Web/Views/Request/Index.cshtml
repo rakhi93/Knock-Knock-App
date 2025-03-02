@@ -1,0 +1,109 @@
+﻿@model List<KnockKnock.Web.Models.Request>
+
+<!-- Page Header -->
+ 
+
+<!-- ✅ Success Message Box (Initially Hidden) -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successMessage" class="alert alert-success text-center mx-auto w-50 mt-3">
+        ✅ @TempData["SuccessMessage"]
+    </div>
+}
+
+<!-- Make Entry Request Button -->
+<div class="text-center mb-3">
+    <form method="post" action="@Url.Action("Create")" class="d-inline">
+        <button type="submit" class="btn btn-primary px-4 py-2">Make Entry Request</button>
+    </form>
+</div>
+
+<!-- My Requests Button -->
+<div class="text-center mb-4">
+    <button id="viewAllButton" class="btn btn-primary px-4 py-2" onclick="showRequests()">My Requests</button>
+    <div id="successMessageContainer" class="mt-2"></div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    function refreshPage() {
+        location.reload();
+    }
+
+    function showRequests() {
+        document.getElementById("requestsTable").style.display = "block";
+        document.getElementById("hideRefreshButtons").style.display = "block";
+        sessionStorage.setItem("showTable", "true");
+
+        // Move success message below My Requests button
+        let successMessage = document.getElementById("successMessage");
+        let successContainer = document.getElementById("successMessageContainer");
+        if (successMessage && successContainer) {
+            successContainer.appendChild(successMessage);
+        }
+    }
+
+    function hideRequests() {
+        document.getElementById("requestsTable").style.display = "none";
+        sessionStorage.removeItem("showTable");
+    }
+
+    // ✅ Hide success message automatically after 3 seconds (optional)
+    document.addEventListener("DOMContentLoaded", function () {
+        if (sessionStorage.getItem("showTable") === "true") {
+            showRequests();
+        } else {
+            hideRequests();
+        }
+
+        setTimeout(() => {
+            if (document.getElementById("successMessage")) {
+                document.getElementById("successMessage").style.display = "none";
+            }
+        }, 3000); // Hide after 3 seconds (optional)
+    });
+</script>
+
+<!-- Table with Requests (Initially Hidden) -->
+<div id="requestsTable" class="table-responsive" style="max-height: 400px; overflow-y: auto; display: none;">
+    @if (Model.Any())
+    {
+        <table class="table table-bordered table-striped table-hover text-center">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th colspan="4" class="text-center">My Requests</th>
+                </tr>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                    <th>Updated Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td>@request.RequestID</td>
+                        <td class="text-dark">
+                            @(request.Status == 0 ? "Waiting for Approval" : request.Status == 1 ? "Approved" : "Rejected")
+                        </td>
+                        <td>@request.CreatedAt.ToString("dd-MM-yyyy hh:mm tt")</td>
+                        <td>@(request.UpdatedAt.HasValue ? request.UpdatedAt.Value.ToString("dd-MM-yyyy hh:mm tt") : "Not Updated")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="text-center text-muted p-3">
+            <strong>No Records Found</strong>
+        </div>
+    }
+
+    <div id="hideRefreshButtons" class="text-center mt-3" style="display: block;">
+        <button class="btn btn-primary px-4 py-2" onclick="hideRequests()">Hide</button>
+        <button id="refreshButton" class="btn btn-primary px-4 py-2 ml-2" onclick="refreshPage()">Refresh</button>
+    </div>
+</div>
